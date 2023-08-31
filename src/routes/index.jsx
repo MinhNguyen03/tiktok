@@ -2,7 +2,7 @@ import Following from "../pages/Following";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import Upload from "../pages/Upload";
-
+import { HeaderOnly } from "../Layout";
 const publicRoutes = [
   {
     path: "/",
@@ -19,7 +19,7 @@ const publicRoutes = [
   {
     path: "/upload",
     component: Upload,
-    layout: null,
+    layout: HeaderOnly,
   },
 ];
 const privateRoutes = [];
