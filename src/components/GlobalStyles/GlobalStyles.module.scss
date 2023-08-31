@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600;700;900&display=swap');
 
 :root{
-    --primary: #fe2c55
+    --primary: #fe2c55;
+    --black: #000;
+    --text-color: #333;
 }
 
 *{
@@ -19,4 +21,14 @@ body{
     font-family: 'Montserrat', sans-serif;
     font-size: 1.6rem;
     text-rendering: optimizeSpeed;
+}
+
+button, input, [tabindex]{
+    outline: none;
+    border: none;
+}
+
+a[href]{
+    color: var(--text-color);
+    text-decoration: none;
 }
