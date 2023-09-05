@@ -28,21 +28,34 @@ const cx = classNames.bind(styles);
 const MENU_ITEMS = [
   {
     icon: faLightbulb,
-    content: "LIVE Creator Hub",
+    title: "LIVE Creator Hub",
     to: "/live_creator",
   },
   {
     icon: faEarthAsia,
-    content: "English",
+    title: "English",
+    children: {
+      title: "Language",
+      data: [
+        {
+          code: "en",
+          title: "English",
+        },
+        {
+          code: "vi",
+          title: "Tiếng Việt",
+        },
+      ],
+    },
   },
   {
     icon: faCircleQuestion,
-    content: "Feedback and help",
+    title: "Feedback and help",
     to: "/feedback",
   },
   {
     icon: faKeyboard,
-    content: "Keyboard shortcuts",
+    title: "Keyboard shortcuts",
   },
 ];
 

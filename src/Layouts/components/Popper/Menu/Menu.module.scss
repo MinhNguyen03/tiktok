@@ -1,5 +1,4 @@
 .content{
-    min-height: 150px;
     width: 225px;
 
     &:hover{
@@ -28,3 +27,28 @@
     background-color: transparent;
 }
 
+
+.header{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    position: relative;
+    margin-top: -8px;
+}
+
+.back-button{
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    margin-left: 28px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.header-title{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+}
