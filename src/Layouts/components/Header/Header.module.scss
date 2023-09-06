@@ -118,3 +118,20 @@
     }
 }
 
+.action-button{
+    margin-left: 22px;
+    cursor: pointer;
+    height: 32px;
+    padding: 3px 3px 0px;
+    position: relative;
+    background-color: transparent;
+    font-size: 2.1rem;
+}
+
+.user-avatar{
+    margin-left: 22px;
+    cursor: pointer;
+    height: 32px;
+    background-color: transparent;
+    border-radius: 50%;
+}

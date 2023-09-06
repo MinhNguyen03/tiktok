@@ -14,9 +14,12 @@ import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
-function Menu({ children, items = [] }) {
+const defaultFn = () => {};
+
+function Menu({ children, items = [], onChange = defaultFn }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const renderItems = () => {
     return current.data.map((item, index) => {
@@ -27,7 +30,10 @@ function Menu({ children, items = [] }) {
           data={item}
           onClick={() => {
             if (isParent) {
+              setIsDarkMode(false);
               setHistory((prev) => [...prev, item.children]);
+            } else {
+              onChange(item);
             }
           }}
         />
@@ -46,21 +52,28 @@ function Menu({ children, items = [] }) {
             {history.length > 1 && (
               <Header
                 title="Language"
-                onBack={() =>
-                  setHistory((prev) => prev.slice(0, prev.length - 1))
-                }
+                onBack={() => {
+                  setHistory((prev) => prev.slice(0, prev.length - 1));
+                  setIsDarkMode(true);
+                }}
               />
             )}
             {renderItems()}
-          </div>
-          <div className={cx("menu-item")}>
-            <Button leftIcon={faMoon} className={cx("dark-mode")}>
-              Dark Mode
-            </Button>
-            <Switch className={cx("switch")} />
+            {isDarkMode && (
+              <div className={cx("menu-item")}>
+                <Button leftIcon={faMoon} className={cx("dark-mode")}>
+                  Dark Mode
+                </Button>
+                <Switch className={cx("switch")} />
+              </div>
+            )}
           </div>
         </PopperWrapper>
       )}
+      onHide={() => {
+        setHistory((prev) => prev.slice(0, 1));
+        setIsDarkMode(true);
+      }}
     >
       {children}
     </Tippy>
