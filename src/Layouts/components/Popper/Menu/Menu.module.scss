@@ -13,6 +13,7 @@
     background-color: transparent;
     font-size: 16px;
     width: 100%;
+    cursor: pointer;
 
     &:hover{
         background-color: rgba(22, 24, 35, 0.03);
@@ -26,7 +27,6 @@
     font-size: 16px;
     background-color: transparent;
 }
-
 
 .header{
     display: flex;
@@ -50,5 +50,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-weight: 700;
+}
+
+
+.log-out{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+.log-out-line{
+    display: flex;
+    height: 1px;
+    width: 225px;
+    border-top: 1px solid lightgray;
 }

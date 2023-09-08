@@ -14,7 +14,6 @@ import {
   faKeyboard,
   faLightbulb,
   faPlus,
-  faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faMagnifyingGlass,
@@ -34,6 +33,7 @@ import { Wrapper as PopperWrapper } from "../Popper";
 import AccountItem from "../../../components/AccountItem";
 import Button from "../../../components/Button";
 import Menu from "../Popper/Menu";
+import Image from "../../../components/Image";
 
 const cx = classNames.bind(styles);
 
@@ -69,52 +69,47 @@ const MENU_ITEMS = [
   },
 ];
 
+const userMenu = [
+  {
+    icon: faUser,
+    title: "View Profile",
+  },
+  {
+    icon: faBookmark,
+    title: "Favorites",
+  },
+  {
+    icon: faCoins,
+    title: "Get Coins",
+  },
+  {
+    icon: faCamera,
+    title: "LIVE Studio",
+  },
+  {
+    icon: faHouse,
+    title: "LIVE Center",
+  },
+  {
+    icon: faLightbulb,
+    title: "LIVE Creator Hub",
+    to: "/live_creator",
+  },
+  {
+    icon: faGear,
+    title: "Settings",
+  },
+  ...MENU_ITEMS.slice(1),
+];
 function Header() {
   const currentUser = true;
   const [searchResult, setSearchResult] = useState([]);
-  const userMenu = [
-    {
-      icon: faUser,
-      title: "View Profile",
-    },
-    {
-      icon: faBookmark,
-      title: "Favorites",
-    },
-    {
-      icon: faCoins,
-      title: "Get Coins",
-    },
-    {
-      icon: faCamera,
-      title: "LIVE Studio",
-    },
-    {
-      icon: faHouse,
-      title: "LIVE Center",
-    },
-    {
-      icon: faLightbulb,
-      title: "LIVE Creator Hub",
-      to: "/live_creator",
-    },
-    {
-      icon: faGear,
-      title: "Settings",
-    },
-    ...MENU_ITEMS.slice(1),
-    {
-      icon: faSignOut,
-      title: "Sign Out",
-      separate: true,
-    },
-  ];
+
   useEffect(() => {
     setTimeout(() => {
       setSearchResult([]);
-    }, 0);
+    }, 5000);
   }, []);
-  console.log(currentUser);
   return (
     <header className={cx("wrapper")}>
       <div className={cx("tiktok-icon")}>
@@ -177,9 +172,12 @@ function Header() {
             <Button primary>Login</Button>
           </>
         )}
-        <Menu items={currentUser ? userMenu : MENU_ITEMS}>
+        <Menu
+          items={currentUser ? userMenu : MENU_ITEMS}
+          currentUser={currentUser}
+        >
           {currentUser ? (
-            <img
+            <Image
               className={cx("user-avatar")}
               src="https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/751d9281c7f18830a694812b0643f720.jpeg?x-expires=1693634400&x-signature=ljBL2dhzpGdIFlKOQ0DFBY3EfhA%3D"
               alt=""

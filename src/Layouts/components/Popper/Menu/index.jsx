@@ -7,7 +7,7 @@ import { Wrapper as PopperWrapper } from "../../Popper";
 import styles from "./Menu.module.scss";
 import MenuItem from "./MenuItem";
 import Button from "../../../../components/Button";
-import { faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faMoon, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { Switch } from "antd";
 import Header from "./Header";
 import { useState } from "react";
@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 
 const defaultFn = () => {};
 
-function Menu({ children, items = [], onChange = defaultFn }) {
+function Menu({ children, items = [], onChange = defaultFn, currentUser }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -66,6 +66,16 @@ function Menu({ children, items = [], onChange = defaultFn }) {
                 </Button>
                 <Switch className={cx("switch")} />
               </div>
+            )}
+            {currentUser && isDarkMode && (
+              <>
+                <span className={cx("log-out-line")}></span>
+                <div className={cx("menu-item")}>
+                  <Button leftIcon={faSignOut} className={cx("log-out")}>
+                    Log Out
+                  </Button>
+                </div>
+              </>
             )}
           </div>
         </PopperWrapper>
