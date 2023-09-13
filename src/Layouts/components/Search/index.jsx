@@ -17,6 +17,7 @@ function Search() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(true);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef();
 
   const handleClear = () => {
@@ -28,8 +29,22 @@ function Search() {
     setShowResult(false);
   };
   useEffect(() => {
-    setSearchResult([1, 2, 3]);
-  }, []);
+    if (!searchValue.trim()) {
+      setSearchResult([]);
+      return;
+    }
+    setLoading(true);
+    fetch(
+      `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
+        searchValue
+      )}&type=less`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setSearchResult(res.data);
+        setLoading(false);
+      });
+  }, [searchValue]);
   return (
     <HeadlessTippy
       visible={showResult && searchResult.length > 0}
@@ -38,8 +53,9 @@ function Search() {
         <PopperWrapper>
           <div className={cx("search-result")} tabIndex="-1" {...attrs}>
             <p className={cx("search-title")}>Accounts</p>
-            <AccountItem />
-            <AccountItem />
+            {searchResult.map((result) => (
+              <AccountItem key={result.id} data={result} />
+            ))}
           </div>
         </PopperWrapper>
       )}
@@ -56,14 +72,16 @@ function Search() {
           onChange={(e) => setSearchValue(e.target.value)}
           onFocus={() => setShowResult(true)}
         />
-        {searchValue && (
+        {!!searchValue && !loading && (
           <button className={cx("clear-button")} onClick={handleClear}>
             <FontAwesomeIcon icon={faCircleXmark} />
           </button>
         )}
-        <span className={cx("loading")}>
-          <FontAwesomeIcon icon={faSpinner} />
-        </span>
+        {loading && (
+          <span className={cx("loading")}>
+            <FontAwesomeIcon icon={faSpinner} />
+          </span>
+        )}
         <span className={cx("small-column")}></span>
         <button className={cx("search-button")}>
           <FontAwesomeIcon icon={faMagnifyingGlass} />

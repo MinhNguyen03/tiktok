@@ -14,7 +14,6 @@ import {
   faLightbulb,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-
 import {
   faPaperPlane,
   faMessage,
@@ -23,7 +22,6 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import "tippy.js/dist/tippy.css";
 import Tippy from "@tippyjs/react";
-
 import Button from "../../../components/Button";
 import Menu from "../Popper/Menu";
 import Image from "../../../components/Image";

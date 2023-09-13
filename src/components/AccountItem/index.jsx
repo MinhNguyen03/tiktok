@@ -1,30 +1,31 @@
+/* eslint-disable react/prop-types */
 import classNames from "classnames/bind";
 import styles from "./AccountItem.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import Image from "../Image";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-function AccountItem() {
+function AccountItem({ data }) {
   return (
-    <div className={cx("wrapper")}>
+    <Link to={`@${data.nickname}`} className={cx("wrapper")}>
       <div className={cx("avatar")}>
-        <Image
-          src="https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/751d9281c7f18830a694812b0643f720.jpeg?x-expires=1693634400&x-signature=ljBL2dhzpGdIFlKOQ0DFBY3EfhA%3D"
-          alt=""
-        />
+        <Image src={data.avatar} alt="" />
       </div>
       <div className={cx("info")}>
         <h4 className={cx("user-name")}>
-          hoaa.hanassii{" "}
-          <span className={cx("tick")}>
-            <FontAwesomeIcon icon={faCircleCheck} />
-          </span>{" "}
+          {data.nickname}
+          {data.tick && (
+            <span className={cx("tick")}>
+              <FontAwesomeIcon icon={faCircleCheck} />
+            </span>
+          )}
         </h4>
-        <p className={cx("name")}>Đào Lê Phương Hoa</p>
+        <p className={cx("name")}>{data.full_name}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 
