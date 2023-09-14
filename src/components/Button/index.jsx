@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./Button.module.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
 
 const cx = classNames.bind(styles);
 
@@ -72,5 +73,20 @@ function Button({
     </Component>
   );
 }
-
+Button.propTypes = {
+  onClick: PropTypes.func,
+  to: PropTypes.string,
+  href: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  primary: PropTypes.bool,
+  outline: PropTypes.bool,
+  small: PropTypes.bool,
+  large: PropTypes.bool,
+  text: PropTypes.bool,
+  disabled: PropTypes.string,
+  rounded: PropTypes.string,
+  circle: PropTypes.string,
+  leftIcon: PropTypes.object,
+  rightIcon: PropTypes.object,
+};
 export default Button;

@@ -1,23 +1,30 @@
+import { HeaderOnly } from "../layouts";
 import Following from "../pages/Following";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import Upload from "../pages/Upload";
-import { HeaderOnly } from "../Layouts";
+import Search from "../pages/Search";
+import config from "../config";
+
 const publicRoutes = [
   {
-    path: "/",
+    path: config.routes.home,
     component: Home,
   },
   {
-    path: "/following",
+    path: config.routes.following,
     component: Following,
   },
   {
-    path: "/@:nickname",
+    path: config.routes.profile,
     component: Profile,
   },
   {
-    path: "/upload",
+    path: config.routes.search,
+    component: Search,
+  },
+  {
+    path: config.routes.upload,
     component: Upload,
     layout: HeaderOnly,
   },

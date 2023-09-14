@@ -1,6 +1,7 @@
 import styles from "./Header.module.scss";
 import classNames from "classnames/bind";
 import logo from "../../../assets/images/tiktok_logo.svg";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCamera,
@@ -26,6 +27,7 @@ import Button from "../../../components/Button";
 import Menu from "../Popper/Menu";
 import Image from "../../../components/Image";
 import Search from "../Search";
+import config from "../../../config";
 
 const cx = classNames.bind(styles);
 
@@ -98,9 +100,9 @@ function Header() {
 
   return (
     <header className={cx("wrapper")}>
-      <div className={cx("tiktok-icon")}>
-        <img src={logo} alt="" />
-      </div>
+      <Link to={config.home} className={cx("tiktok-icon")}>
+        <img src={logo} alt="TikTok" />
+      </Link>
       <Search />
       <div className={cx("action")}>
         <Button text leftIcon={faPlus}>

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
+import PropTypes from "prop-types";
 import { forwardRef, useState } from "react";
 import defaultImage from "../../assets/images/default_img.png";
 
@@ -20,5 +21,11 @@ const Image = forwardRef(
     );
   }
 );
+
+Image.propTypes = {
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  fallback: PropTypes.string,
+};
 
 export default Image;

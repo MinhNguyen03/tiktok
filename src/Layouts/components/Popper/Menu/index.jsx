@@ -11,6 +11,7 @@ import { faMoon, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { Switch } from "antd";
 import Header from "./Header";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const cx = classNames.bind(styles);
 
@@ -46,19 +47,20 @@ function Menu({ children, items = [], onChange = defaultFn, currentUser }) {
       interactive
       delay={[0, 700]}
       placement="bottom-end"
+      hideOnClick={false}
       render={(attrs) => (
         <PopperWrapper>
           <div className={cx("content")} tabIndex="-1" {...attrs}>
             {history.length > 1 && (
               <Header
-                title="Language"
+                title={current.title}
                 onBack={() => {
                   setHistory((prev) => prev.slice(0, prev.length - 1));
                   setIsDarkMode(true);
                 }}
               />
             )}
-            {renderItems()}
+            <div className={cx("menu-body")}>{renderItems()}</div>
             {isDarkMode && (
               <div className={cx("menu-item")}>
                 <Button leftIcon={faMoon} className={cx("dark-mode")}>
@@ -89,5 +91,12 @@ function Menu({ children, items = [], onChange = defaultFn, currentUser }) {
     </Tippy>
   );
 }
+
+Menu.propTypes = {
+  children: PropTypes.node.isRequired,
+  item: PropTypes.array,
+  onChange: PropTypes.func,
+  currentUser: PropTypes.bool,
+};
 
 export default Menu;
