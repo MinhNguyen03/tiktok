@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import PropTypes from "prop-types";
 import { forwardRef, useState } from "react";

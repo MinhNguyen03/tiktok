@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import classNames from "classnames/bind";
 import Tippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
@@ -94,7 +93,7 @@ function Menu({ children, items = [], onChange = defaultFn, currentUser }) {
 
 Menu.propTypes = {
   children: PropTypes.node.isRequired,
-  item: PropTypes.array,
+  items: PropTypes.array,
   onChange: PropTypes.func,
   currentUser: PropTypes.bool,
 };

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import styles from "./DefaultLayout.module.scss";

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Button from "../../../../components/Button";
 import classNames from "classnames/bind";
 import styles from "./Menu.module.scss";
