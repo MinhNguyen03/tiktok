@@ -1,5 +1,4 @@
 .search{
-    min-width: 200px;
     width: 500px;
     height: 46px;
     border-radius: 100px;
@@ -12,6 +11,7 @@
     .search-bar{
         flex: 1;
         height: 21px;
+        padding-right: 40px;
         font-size: 16px;
         background-color: transparent;
         color: var(--black);

@@ -24,6 +24,14 @@ const publicRoutes = [
     component: Search,
   },
   {
+    path: config.routes.explore,
+    component: Search,
+  },
+  {
+    path: config.routes.live,
+    component: Search,
+  },
+  {
     path: config.routes.upload,
     component: Upload,
     layout: HeaderOnly,

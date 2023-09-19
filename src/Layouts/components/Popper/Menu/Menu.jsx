@@ -41,50 +41,54 @@ function Menu({ children, items = [], onChange = defaultFn, currentUser }) {
     });
   };
 
+  const handleBack = () => {
+    setHistory((prev) => prev.slice(0, prev.length - 1));
+    setIsDarkMode(true);
+  };
+
+  const renderResult = (attrs) => (
+    <PopperWrapper>
+      <div className={cx("content")} tabIndex="-1" {...attrs}>
+        {history.length > 1 && (
+          <Header title={current.title} onBack={handleBack} />
+        )}
+        <div className={cx("menu-body")}>{renderItems()}</div>
+        {isDarkMode && (
+          <div className={cx("menu-item")}>
+            <Button leftIcon={faMoon} className={cx("dark-mode")}>
+              Dark Mode
+            </Button>
+            <Switch className={cx("switch")} />
+          </div>
+        )}
+        {currentUser && isDarkMode && (
+          <>
+            <span className={cx("log-out-line")}></span>
+            <div className={cx("menu-item")}>
+              <Button leftIcon={faSignOut} className={cx("log-out")}>
+                Log Out
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+    </PopperWrapper>
+  );
+
+  // Reset to first page
+  const handleReset = () => {
+    setHistory((prev) => prev.slice(0, 1));
+    setIsDarkMode(true);
+  };
+
   return (
     <Tippy
       interactive
       delay={[0, 700]}
       placement="bottom-end"
       hideOnClick={false}
-      render={(attrs) => (
-        <PopperWrapper>
-          <div className={cx("content")} tabIndex="-1" {...attrs}>
-            {history.length > 1 && (
-              <Header
-                title={current.title}
-                onBack={() => {
-                  setHistory((prev) => prev.slice(0, prev.length - 1));
-                  setIsDarkMode(true);
-                }}
-              />
-            )}
-            <div className={cx("menu-body")}>{renderItems()}</div>
-            {isDarkMode && (
-              <div className={cx("menu-item")}>
-                <Button leftIcon={faMoon} className={cx("dark-mode")}>
-                  Dark Mode
-                </Button>
-                <Switch className={cx("switch")} />
-              </div>
-            )}
-            {currentUser && isDarkMode && (
-              <>
-                <span className={cx("log-out-line")}></span>
-                <div className={cx("menu-item")}>
-                  <Button leftIcon={faSignOut} className={cx("log-out")}>
-                    Log Out
-                  </Button>
-                </div>
-              </>
-            )}
-          </div>
-        </PopperWrapper>
-      )}
-      onHide={() => {
-        setHistory((prev) => prev.slice(0, 1));
-        setIsDarkMode(true);
-      }}
+      render={renderResult}
+      onHide={handleReset}
     >
       {children}
     </Tippy>
