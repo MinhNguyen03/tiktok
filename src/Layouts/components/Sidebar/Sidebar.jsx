@@ -1,17 +1,41 @@
-import config from "../../../config";
-import styles from "./Sidebar.module.scss";
-import classNames from "classnames/bind";
-import Menu, { MenuItem } from "./Menu";
 import {
   faCamera,
   faHouse,
   faUserGroup,
   faCompass,
 } from "@fortawesome/free-solid-svg-icons";
-import SuggestedAccounts from "../SuggestedAccounts/SuggestedAccounts";
+import config from "../../../config";
+import styles from "./Sidebar.module.scss";
+import classNames from "classnames/bind";
+import Menu, { MenuItem } from "./Menu";
+import FollowingAccounts from "../FollowingAccounts";
+import { useEffect, useState } from "react";
+import * as userServices from "../../../services/userServices";
 
 const cx = classNames.bind(styles);
+
+const INIT_PAGE = 1;
+const PER_PAGE = 5;
+
 function Sidebar() {
+  const [followers, setFollowers] = useState([]);
+  const [page, setPage] = useState(INIT_PAGE);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await userServices.getFollower({
+        page,
+        perPage: PER_PAGE,
+      });
+      setFollowers((prevResult) => [...prevResult, ...result]); // first time is duplicate because strict mode
+    };
+    fetchApi();
+  }, [page]);
+
+  const handleSeeMore = () => {
+    setPage(page + 1);
+  };
+
   return (
     <aside className={cx("wrapper")}>
       <Menu>
@@ -28,7 +52,11 @@ function Sidebar() {
         />
         <MenuItem title="Live" to={config.routes.live} leftIcon={faCamera} />
       </Menu>
-      <SuggestedAccounts label="Following accounts" />
+      <FollowingAccounts
+        label="Following accounts"
+        data={followers}
+        onSeeMore={handleSeeMore}
+      />
     </aside>
   );
 }
