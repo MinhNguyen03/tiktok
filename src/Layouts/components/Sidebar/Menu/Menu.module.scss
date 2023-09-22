@@ -31,12 +31,3 @@
     justify-content: center;
     font-size: 22px;
 }
-
-.line::after{
-    content: "";
-    display: block;
-    height: 1px;
-    width: 210px;
-    background-color: whitesmoke;
-    margin: 8px 0 8px 0;
-}

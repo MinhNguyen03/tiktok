@@ -11,6 +11,7 @@ import Menu, { MenuItem } from "./Menu";
 import FollowingAccounts from "../FollowingAccounts";
 import { useEffect, useState } from "react";
 import * as userServices from "../../../services/userServices";
+import Footer from "./Footer/Footer";
 
 const cx = classNames.bind(styles);
 
@@ -52,11 +53,14 @@ function Sidebar() {
         />
         <MenuItem title="Live" to={config.routes.live} leftIcon={faCamera} />
       </Menu>
+      <span className={cx("line")}></span>
       <FollowingAccounts
         label="Following accounts"
         data={followers}
         onSeeMore={handleSeeMore}
       />
+      <span className={cx("line")}></span>
+      <Footer />
     </aside>
   );
 }

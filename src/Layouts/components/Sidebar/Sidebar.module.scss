@@ -1,7 +1,14 @@
 .wrapper{
     width: 235px;
-    height: 1000px;
     padding: 20px 0 26px 8px;
     background-color: transparent;
 }
 
+.line::after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 210px;
+    background-color: whitesmoke;
+    margin: 8px 0 8px 8px;
+}

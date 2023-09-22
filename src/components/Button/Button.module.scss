@@ -1,12 +1,14 @@
 .wrapper{
     font-size: 1.6rem;
     min-width: 100px;
+    height: 35px;
     padding: 9px 16px;
     font-weight: 700;
     border-radius: 4px;
     user-select: none;
     display: flex;
     align-items: center;
+    justify-content: center;
 
     &:hover{
         cursor: pointer;

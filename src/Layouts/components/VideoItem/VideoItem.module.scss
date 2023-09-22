@@ -1,0 +1,71 @@
+.wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.content{
+    width: 692px;
+    height: 700px;
+    padding: 20px 0 20px 0;
+    display: flex;
+}
+
+.avatar-wrapper{
+    width: 56px;
+    height: 100%;
+}
+
+.avatar{
+    width: 56px;
+    height: 56px;
+}
+
+.video-content{
+    width: 640px;
+    height: 105px;
+    margin-left: 12px;
+}
+
+.header-content{
+    display: flex;
+}
+
+.video-title{
+    width: 510px;
+    height: 105px;
+}
+
+.follow-btn{
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+.main-video{
+    display: flex;
+}
+
+.video{
+    height: 555px;
+    width: 310px;
+    background-color: black;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.reaction{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.react{
+    height: 48px;
+    width: 48px;
+    font-size: 21px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
