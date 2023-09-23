@@ -19,6 +19,7 @@
 .avatar{
     width: 56px;
     height: 56px;
+    border-radius: 50%;
 }
 
 .video-content{
@@ -45,12 +46,16 @@
     display: flex;
 }
 
-.video{
+.video{ 
     height: 555px;
     width: 310px;
-    background-color: black;
-    border-radius: 8px;
+    border-radius: 12px;
     margin-right: 20px;
+    background-color: black;
+}
+
+video{
+    border-radius: 12px;
 }
 
 .reaction{
@@ -60,12 +65,42 @@
 }
 
 .react{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: gray;
+}
+
+.react-btn{
     height: 48px;
     width: 48px;
+    margin: 8px 0 6px 0;
     font-size: 21px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+}
+
+.line{
+    display: flex;
+    justify-content: center;
+}
+
+.line::after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 700px;
+    background-color: rgb(197, 194, 194);
+}
+
+.user-name{
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 5px;
 }

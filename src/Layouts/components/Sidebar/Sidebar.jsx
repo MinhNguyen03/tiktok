@@ -39,28 +39,34 @@ function Sidebar() {
 
   return (
     <aside className={cx("wrapper")}>
-      <Menu>
-        <MenuItem title="For You" to={config.routes.home} leftIcon={faHouse} />
-        <MenuItem
-          title="Following"
-          to={config.routes.following}
-          leftIcon={faUserGroup}
+      <div className={cx("content")}>
+        <Menu>
+          <MenuItem
+            title="For You"
+            to={config.routes.home}
+            leftIcon={faHouse}
+          />
+          <MenuItem
+            title="Following"
+            to={config.routes.following}
+            leftIcon={faUserGroup}
+          />
+          <MenuItem
+            title="Explore"
+            to={config.routes.explore}
+            leftIcon={faCompass}
+          />
+          <MenuItem title="Live" to={config.routes.live} leftIcon={faCamera} />
+        </Menu>
+        <span className={cx("line")}></span>
+        <FollowingAccounts
+          label="Following accounts"
+          data={followers}
+          onSeeMore={handleSeeMore}
         />
-        <MenuItem
-          title="Explore"
-          to={config.routes.explore}
-          leftIcon={faCompass}
-        />
-        <MenuItem title="Live" to={config.routes.live} leftIcon={faCamera} />
-      </Menu>
-      <span className={cx("line")}></span>
-      <FollowingAccounts
-        label="Following accounts"
-        data={followers}
-        onSeeMore={handleSeeMore}
-      />
-      <span className={cx("line")}></span>
-      <Footer />
+        <span className={cx("line")}></span>
+        <Footer />
+      </div>
     </aside>
   );
 }

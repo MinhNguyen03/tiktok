@@ -4,59 +4,122 @@ import Image from "../../../components/Image";
 import Button from "../../../components/Button";
 import {
   faBookmark,
-  faGear,
   faHeart,
   faMessage,
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import ReactVisibilitySensor from "react-visibility-sensor";
+import { useRef } from "react";
 
 const cx = classNames.bind(styles);
 
-function VideoItem({ data }) {
+function VideoItem({ data, muted }) {
+  const videoRef = useRef(null);
+
+  const handleVideoEnd = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    }
+  };
+
+  const handleVisibilityChange = (isVisible) => {
+    if (isVisible) {
+      videoRef.current.play();
+    } else {
+      videoRef.current.pause();
+    }
+  };
   return (
-    <div className={cx("wrapper")}>
-      <div className={cx("content")}>
-        <div className={cx("avatar-wrapper")}>
-          <Image
-            className={cx("avatar")}
-            src="https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-giso/542d4134e8b03318049938efc27a66a2~c5_100x100.jpeg?x-expires=1695524400&x-signature=wOQ4T0Ey%2B4%2BaaLOCZPbO3fbNsu8%3D"
-          />
-        </div>
-        <div className={cx("video-content")}>
-          <div className={cx("header-content")}>
-            <div className={cx("video-title")}>
-              <div className={cx("user-info")}>moontravel_vnMOONTRAVEL</div>
-              <div className={cx("description")}>
-                Trùng Khánh - Trung Quốc out trình thế giới như thế nào? 💯💯
-              </div>
-              <div className={cx("music")}>nhạc nền - MOONTRAVEL</div>
-            </div>
-            <div className={cx("follow-btn")}>
-              <Button outline>Follow</Button>
-            </div>
+    <>
+      <div className={cx("wrapper")}>
+        <div className={cx("content")}>
+          <div className={cx("avatar-wrapper")}>
+            <Image className={cx("avatar")} src={data.avatar} />
           </div>
-          <div className={cx("main-video")}>
-            <div className={cx("video")}></div>
-            <div className={cx("reaction")}>
-              <button className={cx("react")}>
-                <FontAwesomeIcon icon={faHeart} />
-              </button>
-              <button className={cx("react")}>
-                <FontAwesomeIcon icon={faMessage} />
-              </button>
-              <button className={cx("react")}>
-                <FontAwesomeIcon icon={faBookmark} />
-              </button>
-              <button className={cx("react")}>
-                <FontAwesomeIcon icon={faShare} />
-              </button>
+          <div className={cx("video-content")}>
+            <div className={cx("header-content")}>
+              <div className={cx("video-title")}>
+                <strong className={cx("user-info")}>{data.nickname}</strong>
+                <span className={cx("user-name")}>
+                  {data.first_name + " " + data.last_name}
+                </span>
+                <div className={cx("description")}>
+                  {data.popular_video.description}
+                </div>
+                <div className={cx("music")}>{data.popular_video.music}</div>
+              </div>
+              <div className={cx("follow-btn")}>
+                <Button outline>Follow</Button>
+              </div>
+            </div>
+            <div className={cx("main-video")}>
+              <div className={cx("video")}>
+                <ReactVisibilitySensor
+                  onChange={handleVisibilityChange}
+                  partialVisibility={true}
+                  minTopValue={300}
+                >
+                  <video
+                    muted={muted}
+                    onEnded={handleVideoEnd}
+                    ref={videoRef}
+                    width="310"
+                    height="555"
+                    src={data.popular_video.file_url}
+                    type="video/mp4"
+                    controls
+                  ></video>
+                </ReactVisibilitySensor>
+              </div>
+              <div className={cx("reaction")}>
+                <div className={cx("react")}>
+                  <button className={cx("react-btn")}>
+                    <FontAwesomeIcon icon={faHeart} />
+                  </button>
+                  <p className={cx("quantity")}>
+                    {data.popular_video.likes_count}
+                  </p>
+                </div>
+                <div className={cx("react")}>
+                  <button className={cx("react-btn")}>
+                    <FontAwesomeIcon icon={faMessage} />
+                  </button>
+                  <p className={cx("quantity")}>
+                    {data.popular_video.comments_count}
+                  </p>
+                </div>
+                <div className={cx("react")}>
+                  <button className={cx("react-btn")}>
+                    <FontAwesomeIcon icon={faBookmark} />
+                  </button>
+                  <p className={cx("quantity")}>
+                    {data.popular_video.views_count}
+                  </p>
+                </div>
+                <div className={cx("react")}>
+                  <button className={cx("react-btn")}>
+                    <FontAwesomeIcon icon={faShare} />
+                  </button>
+                  <p className={cx("quantity")}>
+                    {data.popular_video.shares_count}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <p className={cx("line")}></p>
+    </>
   );
 }
+
+VideoItem.propTypes = {
+  data: PropTypes.object,
+  muted: PropTypes.bool,
+};
 
 export default VideoItem;
