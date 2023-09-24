@@ -4,25 +4,30 @@ import Image from "../../../components/Image";
 import Button from "../../../components/Button";
 import {
   faBookmark,
+  faCircleCheck,
   faHeart,
   faMessage,
+  faMusic,
+  faPause,
+  faPlay,
   faShare,
+  faVolumeHigh,
+  faVolumeXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import ReactVisibilitySensor from "react-visibility-sensor";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const cx = classNames.bind(styles);
 
-function VideoItem({ data, muted }) {
+function VideoItem({ data, muted, onMuteChange }) {
   const videoRef = useRef(null);
+  const [isPlay, setIsPlay] = useState(false);
 
-  const handleVideoEnd = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    }
+  const handlePlay = () => {
+    isPlay ? videoRef.current.play() : videoRef.current.pause();
+    setIsPlay(!isPlay);
   };
 
   const handleVisibilityChange = (isVisible) => {
@@ -30,8 +35,15 @@ function VideoItem({ data, muted }) {
       videoRef.current.play();
     } else {
       videoRef.current.pause();
+      setIsPlay(false);
     }
   };
+  const handleMutedChange = () => {
+    const newMuted = !muted;
+    // Gọi callback để thông báo cho component cha
+    onMuteChange(newMuted);
+  };
+  console.log(isPlay);
   return (
     <>
       <div className={cx("wrapper")}>
@@ -43,13 +55,30 @@ function VideoItem({ data, muted }) {
             <div className={cx("header-content")}>
               <div className={cx("video-title")}>
                 <strong className={cx("user-info")}>{data.nickname}</strong>
+                {data.tick && (
+                  <span className={cx("tick")}>
+                    <FontAwesomeIcon icon={faCircleCheck} />
+                  </span>
+                )}
                 <span className={cx("user-name")}>
                   {data.first_name + " " + data.last_name}
                 </span>
                 <div className={cx("description")}>
                   {data.popular_video.description}
                 </div>
-                <div className={cx("music")}>{data.popular_video.music}</div>
+                <div className={cx("music")}>
+                  <FontAwesomeIcon
+                    icon={faMusic}
+                    className={cx("music-icon")}
+                  />
+                  {data.popular_video.music ? (
+                    data.popular_video.music
+                  ) : (
+                    <span>
+                      Music - {data.first_name + " " + data.last_name}
+                    </span>
+                  )}
+                </div>
               </div>
               <div className={cx("follow-btn")}>
                 <Button outline>Follow</Button>
@@ -62,16 +91,37 @@ function VideoItem({ data, muted }) {
                   partialVisibility={true}
                   minTopValue={300}
                 >
-                  <video
-                    muted={muted}
-                    onEnded={handleVideoEnd}
-                    ref={videoRef}
-                    width="310"
-                    height="555"
-                    src={data.popular_video.file_url}
-                    type="video/mp4"
-                    controls
-                  ></video>
+                  <div>
+                    <video
+                      muted={muted}
+                      onClick={handlePlay}
+                      loop
+                      ref={videoRef}
+                      width="310"
+                      height="555"
+                      src={data.popular_video.file_url}
+                      type="video/mp4"
+                    ></video>
+
+                    <button className={cx("pause")} onClick={handlePlay}>
+                      {isPlay ? (
+                        <FontAwesomeIcon icon={faPlay} />
+                      ) : (
+                        <FontAwesomeIcon icon={faPause} />
+                      )}
+                    </button>
+
+                    <button
+                      className={cx("volume")}
+                      onClick={handleMutedChange}
+                    >
+                      {muted ? (
+                        <FontAwesomeIcon icon={faVolumeXmark} />
+                      ) : (
+                        <FontAwesomeIcon icon={faVolumeHigh} />
+                      )}
+                    </button>
+                  </div>
                 </ReactVisibilitySensor>
               </div>
               <div className={cx("reaction")}>
@@ -120,6 +170,7 @@ function VideoItem({ data, muted }) {
 VideoItem.propTypes = {
   data: PropTypes.object,
   muted: PropTypes.bool,
+  onMuteChange: PropTypes.func,
 };
 
 export default VideoItem;

@@ -14,6 +14,7 @@ function VideosContent() {
   const [contents, setContents] = useState([]);
   const [page, setPage] = useState(INIT_PAGE);
   const [isBottom, setIsBottom] = useState(false);
+  const [isMute, setIsMute] = useState(true);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -25,6 +26,9 @@ function VideosContent() {
     };
     fetchApi();
   }, [page]);
+  const handleMuteChange = (newMuteState) => {
+    setIsMute(newMuteState);
+  };
 
   useEffect(() => {
     function handleScroll() {
@@ -59,8 +63,13 @@ function VideosContent() {
 
   return (
     <div className={cx("wrapper")}>
-      {contents.map((content, index) => (
-        <VideoItem data={content} key={content.id} muted={index === 0} />
+      {contents.map((content) => (
+        <VideoItem
+          data={content}
+          key={content.id}
+          muted={isMute}
+          onMuteChange={handleMuteChange}
+        />
       ))}
     </div>
   );
