@@ -18,12 +18,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import ReactVisibilitySensor from "react-visibility-sensor";
 import { useRef, useState } from "react";
+import UserInfo from "../Popper/UserInfo/UserInfo";
 
 const cx = classNames.bind(styles);
 
 function VideoItem({ data, muted, onMuteChange }) {
   const videoRef = useRef(null);
   const [isPlay, setIsPlay] = useState(false);
+  const [isLike, setIsLike] = useState(data.popular_video.is_liked);
+  const [likes, setLikes] = useState(data.popular_video.likes_count);
 
   const handlePlay = () => {
     isPlay ? videoRef.current.play() : videoRef.current.pause();
@@ -43,13 +46,26 @@ function VideoItem({ data, muted, onMuteChange }) {
     // Gọi callback để thông báo cho component cha
     onMuteChange(newMuted);
   };
-  console.log(isPlay);
+
+  const handleLike = () => {
+    if (isLike === false) {
+      setIsLike(true);
+      setLikes(likes + 1);
+    } else {
+      setIsLike(false);
+      setLikes(likes - 1);
+    }
+  };
+  const heartButtonClass = cx("react-btn", { liked: isLike });
+
   return (
     <>
       <div className={cx("wrapper")}>
         <div className={cx("content")}>
           <div className={cx("avatar-wrapper")}>
-            <Image className={cx("avatar")} src={data.avatar} />
+            <UserInfo data={data}>
+              <Image className={cx("avatar")} src={data.avatar} />
+            </UserInfo>
           </div>
           <div className={cx("video-content")}>
             <div className={cx("header-content")}>
@@ -110,28 +126,27 @@ function VideoItem({ data, muted, onMuteChange }) {
                         <FontAwesomeIcon icon={faPause} />
                       )}
                     </button>
-
-                    <button
-                      className={cx("volume")}
-                      onClick={handleMutedChange}
-                    >
-                      {muted ? (
-                        <FontAwesomeIcon icon={faVolumeXmark} />
-                      ) : (
-                        <FontAwesomeIcon icon={faVolumeHigh} />
-                      )}
-                    </button>
+                    <div className={cx("volume-control")}>
+                      <button
+                        className={cx("volume")}
+                        onClick={handleMutedChange}
+                      >
+                        {muted ? (
+                          <FontAwesomeIcon icon={faVolumeXmark} />
+                        ) : (
+                          <FontAwesomeIcon icon={faVolumeHigh} />
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </ReactVisibilitySensor>
               </div>
               <div className={cx("reaction")}>
                 <div className={cx("react")}>
-                  <button className={cx("react-btn")}>
+                  <button className={heartButtonClass} onClick={handleLike}>
                     <FontAwesomeIcon icon={faHeart} />
                   </button>
-                  <p className={cx("quantity")}>
-                    {data.popular_video.likes_count}
-                  </p>
+                  <p className={cx("quantity")}>{likes}</p>
                 </div>
                 <div className={cx("react")}>
                   <button className={cx("react-btn")}>
